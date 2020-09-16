@@ -1,0 +1,110 @@
+///$tab Fato
+MapContasLayoutEspecifico:
+MAPPING
+LOAD
+    hash128(TEXT(Empresa),NumeroConta),
+    TEXT(Empresa)
+FROM 
+	[lib://Resources (saga-bi_parceiro)/Descricao Contas Balancete.xlsx](ooxml, embedded labels, table is [Definição Conta])
+WHERE
+	NOT (Empresa = '' or isnull(Empresa))
+;
+
+
+LEFT KEEP(TabLayout)
+TabLancamentosContabeis:
+LOAD
+	hash128(EmpresaLink,Conta)	as	%LinkLayout,
+    CodEmpresa	AS	CodEmpresaParticipacao,
+	*
+;
+LOAD
+    ApplyMap('MapContasLayoutEspecifico',%LinkEmpresaConta,'*')	AS	EmpresaLink,
+    FagContasBalancete,
+    FlagContasDRE,
+    %LinkConsolidado,
+    %LinkValorAcumulado,
+    text(CodEmpresa)	as	CodEmpresa,
+	MesAno,
+    Conta,
+    CabecaPrincipalConta,
+    FlagEmpresaBalanco,
+    Empresa,
+    FlagContaOriginal,
+    SUM(Valor)	AS	Valor
+FROM 
+	[lib://Transform (saga-bi_parceiro)/FatLancamentosContabeis.qvd](qvd)
+WHERE
+    YEAR(MesAno)	>= YEAR(AddYears(today(),-1))
+GROUP BY
+	%LinkEmpresaConta,
+    %LinkConsolidado,
+    FlagEmpresaBalanco,
+    FagContasBalancete,
+    FlagContasDRE,
+    %LinkValorAcumulado,
+    CodEmpresa,
+	MesAno,
+    Conta,
+    CabecaPrincipalConta,
+    Empresa,
+    FlagContaOriginal
+;
+
+
+TabLancamentosAcumulado:
+LOAD
+    %LinkValorAcumulado,
+    ValorAcumulado
+FROM
+	[lib://Transform (saga-bi_parceiro)/FatLancamentosContabeisAcumulado.qvd](qvd)
+;
+
+TabEmpresasConsolidado:
+LOAD
+    text("Cod Empresa Controladora")	AS	CodEmpresaControladora,
+    text("Empresa Controladora")		AS	EmpresaControladora,
+    text("Empresa Investida")    		AS	EmpresaInvestida,
+    text("Cod Empresa Investida")		AS	%LinkConsolidado
+FROM
+	[lib://Resources (saga-bi_parceiro)/Descricao Contas Balancete.xlsx]
+(ooxml, embedded labels, table is [Analise Consolidado]);
+
+//*
+CONCATENATE(TabEmpresasConsolidado)
+LOAD	distinct
+	hash128(CodEmpresa,CodEmpresaControladora)	as 	%LinkConsolidado,
+    CodEmpresaControladora,
+	EmpresaControladora
+FROM 
+	[lib://Transform (saga-bi_parceiro)/FatLancamentosContabeis.qvd](qvd)
+WHERE
+	//NOT ISNULL(CodEmpresa)
+    FlagEmpresaBalanco =1
+;
+//*/
+
+TabEmpParticipacao:
+LOAD
+    text("Cod Empresa")	AS	CodEmpresaParticipacao,
+    Empresa				AS	EmpresaParticipacao,
+    dual(round((Participacao*100),0.01)&' %',Participacao)		AS	PercParticipacao
+FROM 
+	[lib://Resources (saga-bi_parceiro)/Descricao Contas Balancete.xlsx]
+(ooxml, embedded labels, table is DRE);
+CONCATENATE(TabEmpParticipacao)
+LOAD
+    text("Cod Empresa")	AS	CodEmpresaParticipacao,
+    Empresa				AS	EmpresaParticipacao,
+    dual('100%',1)				AS	PercParticipacao
+FROM 
+	[lib://Resources (saga-bi_parceiro)/Descricao Contas Balancete.xlsx]
+(ooxml, embedded labels, table is DRE);
+CONCATENATE(TabEmpParticipacao)
+LOAD
+    text("Cod Empresa")	AS	CodEmpresaParticipacao,
+    Empresa				AS	EmpresaParticipacao,
+    dual('Total',1.000001)				AS	PercParticipacao
+FROM 
+	[lib://Resources (saga-bi_parceiro)/Descricao Contas Balancete.xlsx]
+(ooxml, embedded labels, table is DRE);
