@@ -3,7 +3,8 @@ MapContasLayoutEspecifico:
 MAPPING
 LOAD
     hash128(TEXT(Empresa),NumeroConta),
-    TEXT(Empresa)
+    TEXT(Empresa),
+    fiz minha alteração, agora o código não funciona.
 FROM 
 	[lib://Resources (saga-bi_parceiro)/Descricao Contas Balancete.xlsx](ooxml, embedded labels, table is [Definição Conta])
 WHERE
