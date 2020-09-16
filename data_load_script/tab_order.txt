@@ -1,1 +1,1 @@
-Main%tab_order_divider%codigo%tab_order_divider%Fato
+Main%tab_order_divider%codigo
