@@ -20,6 +20,10 @@
       "qType": "listbox"
     },
     {
+      "qId": "BRaJrVH",
+      "qType": "table"
+    },
+    {
       "qId": "LoadModel",
       "qType": "LoadModel"
     },
