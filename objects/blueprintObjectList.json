@@ -1,13 +1,23 @@
 {
   "qInfos": [
     {
+      "qId": "1cf6f7db-b9f0-463c-be65-a0cd7fa1630f",
+      "qType": "sheet",
+      "modifiedDate": "2020-09-16T20:08:28.344Z"
+    },
+    {
       "qId": "6378bee4-3134-4364-aeb6-d52d460bccda",
-      "qType": "sheet"
+      "qType": "sheet",
+      "modifiedDate": "2020-09-16T20:08:28.344Z"
     },
     {
       "qId": "641341cc-a6dd-431c-8707-625e240e00f5",
       "qType": "appprops",
-      "modifiedDate": "2020-09-16T19:51:34.571Z"
+      "modifiedDate": "2020-09-16T20:08:28.344Z"
+    },
+    {
+      "qId": "88942ef3-bd19-449e-9789-c5642fc90deb",
+      "qType": "listbox"
     },
     {
       "qId": "LoadModel",
@@ -16,6 +26,22 @@
     {
       "qId": "NrPVpe",
       "qType": "table"
+    },
+    {
+      "qId": "XbuSC",
+      "qType": "text-image"
+    },
+    {
+      "qId": "a4a6c78a-7e1a-44d5-a192-758155b66a59",
+      "qType": "filterpane"
+    },
+    {
+      "qId": "c9ee481a-115e-42c7-97d4-8ef37570f5fb",
+      "qType": "pivot-table"
+    },
+    {
+      "qId": "e95019a0-03ea-40c9-81ee-9593f586ddd6",
+      "qType": "listbox"
     }
   ]
 }

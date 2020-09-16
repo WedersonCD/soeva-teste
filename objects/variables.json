@@ -1,1 +1,36 @@
-[]
+[
+  {
+    "qInfo": {
+      "qId": "9bf3987a-2622-4ed3-a9a3-deb27268d487",
+      "qType": "variable"
+    },
+    "qMetaDef": {
+      "isBlueprintItem": true
+    },
+    "qName": "cValorDRE",
+    "qNumberPresentation": {
+      "qType": "U",
+      "qnDec": 10,
+      "qUseThou": 0
+    },
+    "qDefinition": "IF(TipoCalculo='SOMA',num(Sum({<$1,$2,$3,$4, Conta-={'ReceitaDespesas'}>}Valor * Multiplicador) * max(PercParticipacao) ,'#.##0;(#.##0)'),\r\nIF(TipoCalculo='PERCENTUAL',num(Sum({<$1,$2,$3,$4,TipoContaDivisão={'Numerador'}>} Valor * Multiplicador)/Sum({<$1,$2,$3,$4,TipoContaDivisão={'Denominador'}>} Valor * Multiplicador) * max(PercParticipacao),'#.##0,0%;(#.##0,0%)'),\nnum(Sum({<$1,$2,$3,$4>}Valor * Multiplicador) * max(PercParticipacao),'#.##0;(#.##0)')\n))",
+    "tags": []
+  },
+  {
+    "qInfo": {
+      "qId": "c199c006-4f31-4086-8c93-40df91e6e7c6",
+      "qType": "variable"
+    },
+    "qMetaDef": {
+      "isBlueprintItem": true
+    },
+    "qName": "cValor",
+    "qNumberPresentation": {
+      "qType": "U",
+      "qnDec": 10,
+      "qUseThou": 0
+    },
+    "qDefinition": "IF(TipoCalculo='SOMA',num(Sum({<$1,$2,$3,$4, Conta-={'ReceitaDespesas'}>}Valor * Multiplicador),'#.##0;(#.##0)'),\r\nIF(TipoCalculo='PERCENTUAL',num(Sum({<$1,$2,$3,$4,TipoContaDivisão={'Numerador'}>} Valor * Multiplicador)/Sum({<$1,$2,$3,$4,TipoContaDivisão={'Denominador'}>} Valor * Multiplicador),'#.##0,0%;(#.##0,0%)'),\nnum(Sum({<$1,$2,$3,$4>}Valor * Multiplicador) ,'#.##0;(#.##0)')\n))",
+    "tags": []
+  }
+]
